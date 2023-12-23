@@ -1,14 +1,24 @@
 from flask import Flask, render_template, url_for, redirect
 from fakepinterest_proj import app, database, bcrypt
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from fakepinterest_proj.models import User, Post
 from fakepinterest_proj.forms import FormLogin, FormSignUp
 
 
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
-    formlogin = FormLogin()
-    return render_template('homepage.html', form=formlogin)
+    form_login = FormLogin()
+
+    if form_login.validate_on_submit():
+        
+        user = User.query.filter_by(email=form_login.email.data).first()
+        
+        if user and bcrypt.check_password_hash(user.password, form_login.password.data):
+            
+            login_user(user)
+            return redirect(url_for('profile', given_user=user.username))
+
+    return render_template('homepage.html', form=form_login)
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
@@ -27,10 +37,15 @@ def sign_up():
 
         return redirect(url_for('profile', given_user=user.username))
 
-
     return render_template('sign_up.html', form=form_signup)
 
 @app.route('/profile/<given_user>')
 @login_required
 def profile(given_user):
     return render_template('profile.html', user=given_user)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('homepage'))
