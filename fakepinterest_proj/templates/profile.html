@@ -1,0 +1,11 @@
+{% extends "homepage.html" %}
+
+{% block title %}
+    FakePinterest User Profile - {{ user }}
+{% endblock %}
+
+{% block body %}
+        <h1>Profile</h1>
+        <h4>Name: {{ user }}</h4>
+        <a href="{{ url_for('homepage') }}">Exit</a>  
+{% endblock %}
