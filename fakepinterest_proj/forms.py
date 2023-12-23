@@ -8,7 +8,7 @@ class FormLogin(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirmation_button = SubmitField('Sign in')
 
-class FormCreateAccount(FlaskForm):
+class FormSignUp(FlaskForm):
     email = StringField('E-mail', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired(), Length(8,30)])
