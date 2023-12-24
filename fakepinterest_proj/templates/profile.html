@@ -1,11 +1,18 @@
 {% extends "homepage.html" %}
 
 {% block title %}
-    FakePinterest User Profile - {{ user }}
+    FakePinterest User Profile - {{ user.username }}
 {% endblock %}
 
 {% block body %}
-        <h1>Profile</h1>
-        <h4>Name: {{ user }}</h4>
-        <a href="{{ url_for('logout') }}">Exit</a>  
+    <h1>Profile</h1>
+    <h4>Name: {{ user.username }}</h4>
+    <a href="{{ url_for('logout') }}">Exit</a>
+
+    {% for post in user.post %}
+
+        <img src="">
+
+    {% endfor %}
+
 {% endblock %}

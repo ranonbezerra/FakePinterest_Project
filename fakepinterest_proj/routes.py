@@ -16,7 +16,7 @@ def homepage():
         if user and bcrypt.check_password_hash(user.password, form_login.password.data):
             
             login_user(user)
-            return redirect(url_for('profile', given_user=user.username))
+            return redirect(url_for('profile', user_id=user.id))
 
     return render_template('homepage.html', form=form_login)
 
@@ -35,14 +35,21 @@ def sign_up():
         database.session.commit()
         login_user(user, remember=True)
 
-        return redirect(url_for('profile', given_user=user.username))
+        return redirect(url_for('profile', user_id=user.id))
 
     return render_template('sign_up.html', form=form_signup)
 
-@app.route('/profile/<given_user>')
+@app.route('/profile/<user_id>')
 @login_required
-def profile(given_user):
-    return render_template('profile.html', user=given_user)
+def profile(user_id):
+
+    
+    
+    if int(current_user().id) == int(user_id):
+        return render_template('profile.html', user=current_user())
+    else:
+        user = User.query.get(int(user_id))
+        return render_template('profile.html', user=user)
 
 @app.route('/logout')
 @login_required
