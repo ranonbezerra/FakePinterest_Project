@@ -8,7 +8,10 @@
     <h2>Main Feed</h2>
 
     {% for post in posts %}
-        <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
+
+        <a href="{{ url_for('profile', user_id=post.user.id) }}">
+            <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
+        </a>
     {% endfor %}
 
 {% endblock %}

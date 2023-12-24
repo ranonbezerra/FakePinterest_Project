@@ -9,18 +9,22 @@ from werkzeug.utils import secure_filename
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
         
-    form_login = FormLogin()
+    if current_user.is_authenticated:
+        return redirect(url_for('profile', user_id=current_user.id))
+    
+    else:
+        form_login = FormLogin()
 
-    if form_login.validate_on_submit():
-        
-        user = User.query.filter_by(email=form_login.email.data).first()
-        
-        if user and bcrypt.check_password_hash(user.password, form_login.password.data):
+        if form_login.validate_on_submit():
             
-            login_user(user)
-            return redirect(url_for('profile', user_id=user.id))
+            user = User.query.filter_by(email=form_login.email.data).first()
+            
+            if user and bcrypt.check_password_hash(user.password, form_login.password.data):
+                
+                login_user(user)
+                return redirect(url_for('profile', user_id=user.id))
 
-    return render_template('homepage.html', form=form_login)
+        return render_template('homepage.html', form=form_login)
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
