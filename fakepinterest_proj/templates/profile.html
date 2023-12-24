@@ -7,11 +7,24 @@
 {% block body %}
     <h1>Profile</h1>
     <h4>Name: {{ user.username }}</h4>
+
+    {% if form %}
+        <form method="POST" enctype="multipart/form-data">
+
+            {{ form.csrf_token }}
+            {{ form.post_image() }}
+            {{ form.confirm_post_button() }}
+
+        </form>
+    {% endif %}
+
     <a href="{{ url_for('logout') }}">Exit</a>
 
     {% for post in user.post %}
+        <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
+        
 
-        <img src="">
+        
 
     {% endfor %}
 

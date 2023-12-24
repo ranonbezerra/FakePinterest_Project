@@ -2,11 +2,13 @@ from flask import Flask, render_template, url_for, redirect
 from fakepinterest_proj import app, database, bcrypt
 from flask_login import login_required, login_user, logout_user, current_user
 from fakepinterest_proj.models import User, Post
-from fakepinterest_proj.forms import FormLogin, FormSignUp
-
+from fakepinterest_proj.forms import FormLogin, FormSignUp, FormPost
+import os
+from werkzeug.utils import secure_filename
 
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
+        
     form_login = FormLogin()
 
     if form_login.validate_on_submit():
@@ -39,17 +41,27 @@ def sign_up():
 
     return render_template('sign_up.html', form=form_signup)
 
-@app.route('/profile/<user_id>')
+@app.route('/profile/<user_id>', methods=['GET', 'POST'])
 @login_required
 def profile(user_id):
 
-    
-    
-    if int(current_user().id) == int(user_id):
-        return render_template('profile.html', user=current_user())
+    if int(current_user.id) == int(user_id):
+        form_post = FormPost()
+        if form_post.validate_on_submit():
+            print('oi')
+            file = form_post.post_image.data
+            safe_filename = secure_filename(file.filename)
+            post_images_path = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                            app.config["UPLOAD_FOLDER"], safe_filename)
+            file.save(post_images_path)
+            post = Post(image=safe_filename, user_id=int(current_user.id))
+            database.session.add(post)
+            database.session.commit()
+            
+        return render_template('profile.html', user=current_user, form=form_post)
     else:
         user = User.query.get(int(user_id))
-        return render_template('profile.html', user=user)
+        return render_template('profile.html', user=user, form=None)
 
 @app.route('/logout')
 @login_required

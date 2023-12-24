@@ -11,7 +11,7 @@ class User(database.Model, UserMixin):
     username = database.Column(database.String, nullable=False)
     email = database.Column(database.String, nullable=False, unique=True)
     password = database.Column(database.String, nullable=False)
-    photos = database.relationship("Post", backref='user', lazy=True)
+    post = database.relationship("Post", backref='user', lazy=True)
 
 
 class Post(database.Model):

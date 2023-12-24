@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, FileField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from fakepinterest_proj.models import User
 
@@ -7,6 +7,7 @@ class FormLogin(FlaskForm):
     email = StringField('E-mail', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirmation_button = SubmitField('Sign in')
+
 
 class FormSignUp(FlaskForm):
     email = StringField('E-mail', validators=[DataRequired(), Email()])
@@ -20,3 +21,8 @@ class FormSignUp(FlaskForm):
         
         if user:
             return ValidationError("Email already registered. Please, Sign in.")
+        
+
+class FormPost(FlaskForm):
+    post_image = FileField('Post Image', validators=[DataRequired()])
+    confirm_post_button = SubmitField('Post')
