@@ -1,0 +1,14 @@
+{% extends "homepage.html"%}
+
+{% block body %}
+
+    {% include "navbar.html" %}
+
+    <h1>Fake Pinterest</h1>
+    <h2>Main Feed</h2>
+
+    {% for post in posts %}
+        <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
+    {% endfor %}
+
+{% endblock %}

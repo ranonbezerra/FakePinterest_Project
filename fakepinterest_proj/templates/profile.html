@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+
+    {% include "navbar.html" %}
     <h1>Profile</h1>
     <h4>Name: {{ user.username }}</h4>
 
@@ -18,14 +20,10 @@
         </form>
     {% endif %}
 
-    <a href="{{ url_for('logout') }}">Exit</a>
+    
 
     {% for post in user.post %}
         <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
-        
-
-        
-
     {% endfor %}
 
 {% endblock %}

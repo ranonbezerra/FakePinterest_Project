@@ -28,6 +28,8 @@ def sign_up():
 
     if form_signup.validate_on_submit():
 
+        print('oi')
+
         password = bcrypt.generate_password_hash(form_signup.password.data).decode('utf-8')
         user = User(username=form_signup.username.data,
                     email=form_signup.email.data,
@@ -68,3 +70,12 @@ def profile(user_id):
 def logout():
     logout_user()
     return redirect(url_for('homepage'))
+
+@app.route("/feed")
+def feed():
+    posts = []
+
+    for user_id in User.query.with_entities(User.id).all():
+        last_user_post = Post.query.filter_by(user_id = user_id[0]).order_by(Post.creation_date).all()[-1]
+        posts.append(last_user_post)
+    return render_template("feed.html", posts=posts)
