@@ -2,6 +2,7 @@
 
 {% block body %}
 
+    <body>
     {% include "navbar.html" %}
 
     <h1>Fake Pinterest</h1>
@@ -13,5 +14,5 @@
             <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
         </a>
     {% endfor %}
-
+    </body>
 {% endblock %}

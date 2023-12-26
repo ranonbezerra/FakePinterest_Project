@@ -6,6 +6,7 @@
 
 {% block body %}
 
+    <body>
     {% include "navbar.html" %}
     <h1>Profile</h1>
     <h4>Name: {{ user.username }}</h4>
@@ -20,10 +21,9 @@
         </form>
     {% endif %}
 
-    
-
     {% for post in user.post %}
         <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
     {% endfor %}
+    </body>
 
 {% endblock %}
