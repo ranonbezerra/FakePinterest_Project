@@ -14,25 +14,26 @@
     <body>
         {% block body %}
 
-        <h1>Fake Pinterest</h1>
-        <h2>A website similar to Pinterest</h2>
+            <h1>Fake Pinterest</h1>
+            <h2>A website similar to Pinterest</h2>
 
 
-        {% block form %}
-        <form method="POST">
+            {% block form %}
+            <form method="POST">
 
 
-            {{ form.csrf_token }}
-            {{ form.email.label() }}
-            {{ form.email() }}
+                {{ form.csrf_token }}
+                {{ form.email.label() }}
+                {{ form.email() }}
 
-            {{ form.password.label() }}
-            {{ form.password() }}
+                {{ form.password.label() }}
+                {{ form.password() }}
 
-            {{ form.confirmation_button() }}
+                {{ form.confirmation_button() }}
 
-        </form>
-        {% endblock %}
+            </form>
+            <a href="{{ url_for('sign_up')}}">Don't have an Account? Sign Up Here!</a>
+            {% endblock %}
 
 
         {% endblock %}
