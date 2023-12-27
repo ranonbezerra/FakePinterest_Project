@@ -74,6 +74,7 @@ def logout():
     return redirect(url_for('homepage'))
 
 @app.route("/feed")
+@login_required
 def feed():
     posts = []
 
