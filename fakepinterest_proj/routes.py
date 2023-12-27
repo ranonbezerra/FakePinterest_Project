@@ -32,8 +32,6 @@ def sign_up():
 
     if form_signup.validate_on_submit():
 
-        print('oi')
-
         password = bcrypt.generate_password_hash(form_signup.password.data).decode('utf-8')
         user = User(username=form_signup.username.data,
                     email=form_signup.email.data,
@@ -86,4 +84,4 @@ def feed():
     if posts:
         return render_template("feed.html", posts=posts)
     else:
-        return render_template("homepage.html")
+        return redirect(url_for('profile', user_id=current_user.id))
