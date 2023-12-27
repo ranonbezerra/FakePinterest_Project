@@ -88,5 +88,5 @@ def feed():
     
 @app.route('/uploads/<path:filename>')
 def custom_static(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachament=True)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
     
