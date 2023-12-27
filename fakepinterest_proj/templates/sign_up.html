@@ -53,7 +53,7 @@
         {% if form.password.errors %}
             {% for error in form.password.errors %}
                 <p style="color: red"> {{ error }}</p>
-            % endfor %}
+            {% endfor %}
         {% endif %}
         {{ form.password(class="input") }}
     </div>
