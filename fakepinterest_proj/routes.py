@@ -79,7 +79,10 @@ def logout():
 def feed():
     posts = []
 
-    for user_id in User.query.with_entities(User.id).all():
-        last_user_post = Post.query.filter_by(user_id = user_id[0]).order_by(Post.creation_date).all()[-1]
-        posts.append(last_user_post)
-    return render_template("feed.html", posts=posts)
+    if User.query.with_entities(User.id).all():
+        for user_id in User.query.with_entities(User.id).all():
+            last_user_post = Post.query.filter_by(user_id = user_id[0]).order_by(Post.creation_date).all()[-1]
+            posts.append(last_user_post)
+        return render_template("feed.html", posts=posts)
+    else:
+        return render_template("homepage.html")
