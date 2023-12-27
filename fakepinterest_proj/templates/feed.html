@@ -5,14 +5,14 @@
     <body>
     {% include "navbar.html" %}
 
-    <h1>Fake Pinterest</h1>
-    <h2>Main Feed</h2>
-
-    {% for post in posts %}
-
-        <a href="{{ url_for('profile', user_id=post.user.id) }}">
-            <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}">
-        </a>
-    {% endfor %}
+        <div class="container">
+            <div class="conteudo">
+                {% for post in posts %}
+                    <a href="{{ url_for('profile', user_id=post.user.id) }}" class="bloco-imagem" style="text-decoration: none;">
+                        <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}" alt="Pinterest 1" />
+                    </a>
+                {% endfor %}
+            </div>
+        </div>    
     </body>
 {% endblock %}
