@@ -8,6 +8,12 @@ class FormLogin(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirmation_button = SubmitField('Sign in')
 
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        
+        if not user:
+            raise ValidationError("Email doesn't exist. Please, Sign up.")
+
 
 class FormSignUp(FlaskForm):
     email = StringField('E-mail', validators=[DataRequired(), Email()])
@@ -20,7 +26,7 @@ class FormSignUp(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         
         if user:
-            return ValidationError("Email already registered. Please, Sign in.")
+            raise ValidationError("Email already registered. Please, Sign in.")
         
 
 class FormPost(FlaskForm):
