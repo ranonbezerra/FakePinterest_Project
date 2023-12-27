@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')
 app.config["SECRET_KEY"] = os.getenv('SECRET_KEY')
-app.config['UPLOAD_FOLDER'] = 'static/post_images'
+app.config['UPLOAD_FOLDER'] = '/post_images'
 
 
 database = SQLAlchemy(app)

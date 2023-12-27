@@ -33,7 +33,7 @@
         <div class="conteudo">
             {% for post in user.post %}
                 <div class="bloco-imagem">
-                    <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}" />
+                    <img src="{{ url_for('custom_static', filename='{}'.format(post.image)) }}" />
                 </div>
             {% endfor %}
         </div>

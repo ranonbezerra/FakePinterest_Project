@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, send_from_directory
 from fakepinterest_proj import app, database, bcrypt
 from flask_login import login_required, login_user, logout_user, current_user
 from fakepinterest_proj.models import User, Post
@@ -55,8 +55,7 @@ def profile(user_id):
             print('oi')
             file = form_post.post_image.data
             safe_filename = secure_filename(file.filename)
-            post_images_path = os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                                            app.config["UPLOAD_FOLDER"], safe_filename)
+            post_images_path = os.path.join(app.config["UPLOAD_FOLDER"], safe_filename)
             file.save(post_images_path)
             post = Post(image=safe_filename, user_id=int(current_user.id))
             database.session.add(post)
@@ -86,3 +85,8 @@ def feed():
         return render_template("feed.html", posts=posts)
     else:
         return redirect(url_for('profile', user_id=current_user.id))
+    
+@app.route('/uploads/<path:filename>')
+def custom_static(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachament=True)
+    

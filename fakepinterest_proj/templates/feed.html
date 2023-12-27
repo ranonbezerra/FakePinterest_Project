@@ -9,7 +9,7 @@
             <div class="conteudo">
                 {% for post in posts %}
                     <a href="{{ url_for('profile', user_id=post.user.id) }}" class="bloco-imagem" style="text-decoration: none;">
-                        <img src="{{ url_for('static', filename='post_images/{}'.format(post.image)) }}" alt="Pinterest 1" />
+                        <img src="{{ url_for('custom_static', filename='{}'.format(post.image)) }}" alt="Pinterest 1" />
                     </a>
                 {% endfor %}
             </div>
