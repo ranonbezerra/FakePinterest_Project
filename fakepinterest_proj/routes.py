@@ -80,7 +80,7 @@ def feed():
     posts = []
 
     for user_id in User.query.with_entities(User.id).all():
-        if Post.query.filter_by(user_id = user_id[0]).order_by(Post.creation_date).all()[-1]:
+        if Post.query.filter_by(user_id = user_id[0]).order_by(Post.creation_date).all():
             last_user_post = Post.query.filter_by(user_id = user_id[0]).order_by(Post.creation_date).all()[-1]
             posts.append(last_user_post)
     if posts:
